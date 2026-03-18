@@ -140,6 +140,11 @@ tbody td{padding:.9rem 1.25rem;font-size:.875rem}
           <option>Reading</option><option>Researching</option><option>Use of Computer</option>
           <option>Meeting</option><option>Printing / Scanning</option><option>Borrowing Books</option><option>Other</option>
         </select>
+        <select class="filter-select" id="filterVisitorType" onchange="renderLog()">
+  <option value="">All Visitors</option>
+  <option value="Student">Student</option>
+  <option value="Employee">Employee</option>
+</select>
         <button class="pdf-btn" onclick="exportPDF()">⬇ Export PDF</button>
       </div>
 
@@ -250,10 +255,10 @@ let _logData = [];
 function renderLog() {
   const q      = document.getElementById('searchLog').value;
   const reason = document.getElementById('filterReason').value;
+  const visitorType = document.getElementById('filterVisitorType').value;
   const from   = document.getElementById('dateFrom').value;
   const to     = document.getElementById('dateTo').value;
-  get('get_log', { q, reason, from, to }).then(res => {
-    _logData = res.data || [];
+get('get_log', { q, reason, from, to, visitor_type: visitorType }).then(res => {    _logData = res.data || [];
     const tbody = document.getElementById('logBody');
     document.getElementById('logCount').textContent = _logData.length + ' records';
     if (!_logData.length) {

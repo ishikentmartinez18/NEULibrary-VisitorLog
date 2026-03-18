@@ -1,6 +1,7 @@
 <?php
 // ── api.php ── JSON REST-style endpoint ──────────────────────────────────────
 session_start();
+date_default_timezone_set('Asia/Manila');
 header('Content-Type: application/json');
 header('X-Content-Type-Options: nosniff');
 
@@ -15,6 +16,7 @@ switch ($action) {
         $rfid    = trim($_POST['rfid']    ?? '');
         $reason  = trim($_POST['reason']  ?? '');
         $program = trim($_POST['program'] ?? '');
+        $visitor_type = trim($_POST['visitor_type'] ?? 'Student');
         $name    = trim($_POST['name']    ?? '');
 
         if (!$rfid || !$reason || !$program || !$name) {
@@ -31,8 +33,9 @@ switch ($action) {
             exit;
         }
 
-        $stmt = $db->prepare('INSERT INTO visit_log (name, rfid, program, reason, timestamp) VALUES (?, ?, ?, ?, NOW())');
-        $stmt->execute([$name, $rfid, $program, $reason]);
+$now = date('Y-m-d H:i:s');
+$stmt = $db->prepare('INSERT INTO visit_log (name, rfid, program, visitor_type, reason, timestamp) VALUES (?, ?, ?, ?, ?, ?)');
+$stmt->execute([$name, $rfid, $program, $visitor_type, $reason, $now]);
         $id = $db->lastInsertId();
 
         $stmt = $db->prepare('SELECT * FROM visit_log WHERE id = ?');
@@ -52,10 +55,10 @@ switch ($action) {
             exit;
         }
 
-        // Only requirement: email must end with @neu.admin.ph
+        // Only requirement: email must end with @neu.edu.ph
         // Password can be anything — no database check needed
-        if (!str_ends_with($user, '@neu.admin.ph')) {
-            echo json_encode(['success' => false, 'message' => 'Email must end with @neu.admin.ph']);
+        if (!str_ends_with($user, '@neu.edu.ph')) {
+            echo json_encode(['success' => false, 'message' => 'Email must end with @neu.edu.ph']);
             exit;
         }
 
@@ -84,6 +87,8 @@ switch ($action) {
         $params = [$q, $q, $q, $q];
 
         if ($reason) { $sql .= ' AND reason = ?'; $params[] = $reason; }
+        $visitor_type = trim($_GET['visitor_type'] ?? '');
+if ($visitor_type) { $sql .= ' AND visitor_type = ?'; $params[] = $visitor_type; }
         if ($from)   { $sql .= ' AND DATE(timestamp) >= ?'; $params[] = $from; }
         if ($to)     { $sql .= ' AND DATE(timestamp) <= ?'; $params[] = $to; }
 

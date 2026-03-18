@@ -110,6 +110,13 @@ body::before{content:'';position:fixed;inset:0;background:url('assets/neu.jpg') 
         <input type="text" id="programInput" placeholder="e.g. BSIT, BSCS, Faculty">
       </div>
       <div class="field">
+  <label>I am a</label>
+  <select id="visitorType">
+    <option value="Student">Student</option>
+    <option value="Employee">Employee (Teacher / Staff)</option>
+  </select>
+</div>
+      <div class="field">
         <label>Full Name</label>
         <input type="text" id="nameInput" placeholder="Juan Dela Cruz">
       </div>
@@ -163,14 +170,14 @@ function visitorLogin() {
   const rfid    = document.getElementById('rfidInput').value.trim();
   const reason  = document.getElementById('reasonInput').value;
   const program = document.getElementById('programInput').value.trim();
+  const visitorType = document.getElementById('visitorType').value;
   const name    = document.getElementById('nameInput').value.trim();
 
   if (!rfid || !reason || !program || !name) { alert('Please fill in all fields.'); return; }
 
   document.getElementById('blockedMsg').style.display = 'none';
 
-  const body = new URLSearchParams({ rfid, reason, program, name });
-  fetch('api.php?action=visitor_login', { method:'POST', body })
+const body = new URLSearchParams({ rfid, reason, program, name, visitor_type: visitorType });  fetch('api.php?action=visitor_login', { method:'POST', body })
     .then(r => r.json())
     .then(res => {
       if (!res.success && res.blocked) {
@@ -237,24 +244,6 @@ document.addEventListener('keydown', e => {
   const isAdmin = document.getElementById('adminForm').style.display !== 'none';
   isAdmin ? adminLogin() : visitorLogin();
 });
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/NEUProject/sw.js')
-        .then(reg => console.log('SW registered'))
-        .catch(err => console.error('SW failed:', err));
-    });
-  }
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/NEUProject/sw.js')
-        .then(reg => console.log('SW registered'))
-        .catch(err => console.error('SW failed:', err));
-    });
-  }
 </script>
 <script>
   if ('serviceWorker' in navigator) {
