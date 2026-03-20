@@ -140,10 +140,11 @@ tbody td{padding:.9rem 1.25rem;font-size:.875rem}
           <option>Reading</option><option>Researching</option><option>Use of Computer</option>
           <option>Meeting</option><option>Printing / Scanning</option><option>Borrowing Books</option><option>Other</option>
         </select>
-        <select class="filter-select" id="filterVisitorType" onchange="renderLog()">
+       <select class="filter-select" id="filterVisitorType" onchange="renderLog()">
   <option value="">All Visitors</option>
   <option value="Student">Student</option>
-  <option value="Employee">Employee</option>
+  <option value="Staff">Staff</option>
+  <option value="Faculty">Faculty</option>
 </select>
         <button class="pdf-btn" onclick="exportPDF()">⬇ Export PDF</button>
       </div>
@@ -155,8 +156,7 @@ tbody td{padding:.9rem 1.25rem;font-size:.875rem}
         </div>
         <div style="overflow-x:auto;">
           <table>
-            <thead><tr><th>#</th><th>Name</th><th>ID / Email</th><th>Program</th><th>Reason</th><th>Date & Time</th><th>Status</th></tr></thead>
-            <tbody id="logBody"></tbody>
+<thead><tr><th>#</th><th>Name</th><th>ID / Email</th><th>Program</th><th>Type</th><th>Reason</th><th>Date & Time</th><th>Status</th></tr></thead>            <tbody id="logBody"></tbody>
           </table>
         </div>
       </div>
@@ -270,7 +270,8 @@ get('get_log', { q, reason, from, to, visitor_type: visitorType }).then(res => {
         <td data-label="#">${i+1}</td>
         <td data-label="Name"><strong>${esc(v.name)}</strong></td>
         <td data-label="ID">${esc(v.rfid)}</td>
-        <td data-label="Program">${esc(v.program)}</td>
+     <td data-label="Program">${esc(v.program)}</td>
+        <td data-label="Type">${esc(v.visitor_type || 'Student')}</td>
         <td data-label="Reason"><span class="td-reason">${esc(v.reason)}</span></td>
         <td data-label="Date">${fmtDT(v.timestamp)}</td>
         <td data-label="Status"><span class="td-status in"><span class="dot"></span>Logged</span></td>

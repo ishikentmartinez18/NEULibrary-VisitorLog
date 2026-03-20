@@ -111,10 +111,11 @@ body::before{content:'';position:fixed;inset:0;background:url('assets/neu.jpg') 
       </div>
       <div class="field">
   <label>I am a</label>
-  <select id="visitorType">
-    <option value="Student">Student</option>
-    <option value="Employee">Employee (Teacher / Staff)</option>
-  </select>
+<select id="visitorType">
+  <option value="Student">Student</option>
+  <option value="Staff">Staff</option>
+  <option value="Faculty">Faculty</option>
+</select>
 </div>
       <div class="field">
         <label>Full Name</label>
@@ -143,8 +144,7 @@ body::before{content:'';position:fixed;inset:0;background:url('assets/neu.jpg') 
 <!-- ── WELCOME SCREEN ── -->
 <div id="welcomeScreen" class="screen">
   <div class="welcome-card">
-    <div class="welcome-icon"><img src="lib.jpg" alt="Library"></div>
-    <div class="welcome-name"    id="wName"></div>
+<div class="welcome-icon"><img src="assets/lib.jpg" alt="Library"></div>    <div class="welcome-name"    id="wName"></div>
     <div class="welcome-program" id="wProgram"></div>
     <div class="welcome-msg">Welcome to NEU Library!</div>
     <div class="welcome-sub"     id="wTime"></div>
