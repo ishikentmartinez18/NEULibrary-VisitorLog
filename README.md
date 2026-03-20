@@ -2,7 +2,7 @@
 A web-based visitor logging system built for the **New Era University Library**. Designed to replace traditional paper logbooks with a fast, digital, and organized solution.
 
 ## 🌐 Live App
-🔗 http://neulibrarylog.infinityfreeapp.com
+🔗 https://neulibrarylog.infinityfreeapp.com
 
 ## 💡 About
 Managing library foot traffic manually is slow and messy. This system solves that by letting students, staff, and faculty log their visits digitally — either through their NEU Google account or their RFID/Student ID. Admins get a real-time dashboard to monitor everything from visit counts to individual records.
